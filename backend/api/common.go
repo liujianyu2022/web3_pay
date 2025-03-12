@@ -50,14 +50,14 @@ func newError(code int, msg string) error {
 	return err
 }
 
-func HandleSuccess(ctx *gin.Context, data any) {
+func HandleSuccess(ctx *gin.Context, message string, data any) {
 	if data == nil {
 		data = map[string]any{}
 	}
 
 	response := Response{
 		Code: 0, 
-		Message: "", 
+		Message: message, 
 		Data: data,
 	}
 

@@ -38,7 +38,7 @@ func (userhandler *UserHandler) Register(ctx *gin.Context) {
 		return
 	}
 
-	api.HandleSuccess(ctx, "register success!")
+	api.HandleSuccess(ctx, "register successfully!", "")
 }
 
 func (userhandler *UserHandler) Login(ctx *gin.Context) {
@@ -61,7 +61,7 @@ func (userhandler *UserHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	api.HandleSuccess(ctx, api.LoginResponseData{
+	api.HandleSuccess(ctx, "login successfully",  api.LoginResponseData{
 		AccessToken: token,
 	})
 }

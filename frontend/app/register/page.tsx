@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { AiFillMail } from "react-icons/ai";
 import { FaLock, FaUser } from "react-icons/fa"
-import message from "../../componets/Message";
-import { MessageTypeEnum } from "../../interfaces/MessageTypes";
+import message from "../../components/Message";
+import { MessageTypeEnum } from "../../interfaces/messageTypes"
 import { register } from "../../api/user";
+import { useRouter } from "next/navigation";
+
 
 export default function RegisterPage() {
     const [email, setEmail] = useState<string>('')
@@ -13,12 +15,18 @@ export default function RegisterPage() {
     const [password, setPassword] = useState<string>('')
     const [rePassword, setRePassword] = useState<string>('')
 
+    const router = useRouter()
+
     const registers = async (event: React.FormEvent) => {
         event.preventDefault()
 
         try {
-            const result = await register({email, nickname, password, re_password: rePassword})
-            console.log("result = ", result)
+            const { data: { code, message: msg, data } } = await register({ email, nickname, password, re_password: rePassword })
+            if (code === 0) {
+                message(msg, MessageTypeEnum.success)
+            } else {
+                throw Error(msg)
+            }
         } catch (error: any) {
             message(error.message, MessageTypeEnum.error)
         }
@@ -26,9 +34,9 @@ export default function RegisterPage() {
 
     return (
         <div className="w-full h-full flex items-center justify-center">
-            <div className="w-1/3 h-3/5 p-5 flex items-center justify-center bg-white rounded-md">
-                <form onSubmit={registers} className="w-full flex flex-col justify-center items-center">
-                    <div className="mb-8 relative w-4/5">
+            <div className="w-1/3 h-3/5 p-5  flex flex-col items-center justify-center bg-white rounded-md">
+                <form onSubmit={registers} className="w-full mb-5 flex flex-col justify-center items-center">
+                    <div className="mb-6 relative w-4/5">
                         < AiFillMail className="absolute left-3 top-1/2 transform -translate-y-1/2" />
                         <input
                             type="text"
@@ -42,7 +50,7 @@ export default function RegisterPage() {
                         />
                     </div>
 
-                    <div className="mb-8 relative w-4/5">
+                    <div className="mb-6 relative w-4/5">
                         <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2" />
                         <input
                             type="text"
@@ -56,7 +64,7 @@ export default function RegisterPage() {
                         />
                     </div>
 
-                    <div className="mb-8 relative w-4/5">
+                    <div className="mb-6 relative w-4/5">
                         <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2" />
                         <input
                             type="password"
@@ -70,7 +78,7 @@ export default function RegisterPage() {
                         />
                     </div>
 
-                    <div className="mb-8 relative w-4/5">
+                    <div className="mb-6 relative w-4/5">
                         <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2" />
                         <input
                             type="password"
@@ -95,12 +103,13 @@ export default function RegisterPage() {
                         <button
                             type="button"
                             className="w-2/5 pt-2 pb-2 border rounded-md border-gray-300 hover:border-gray-400"
-                            onClick={() => {setEmail(""); setNickname(""); setPassword(""); setRePassword("") }}
+                            onClick={() => { setEmail(""); setNickname(""); setPassword(""); setRePassword("") }}
                         >
                             Reset
                         </button>
                     </div>
                 </form>
+                <div className="text-blue-500 cursor-pointer underline" onClick={()=>router.push("/login")}>Go back to login</div>
             </div>
         </div>
     )

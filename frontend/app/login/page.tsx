@@ -3,23 +3,33 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react"
 import { FaUser, FaLock } from 'react-icons/fa';
+import { login } from "../../api/user";
+import message from "../../components/Message";
+import { MessageTypeEnum } from "../../interfaces/messageTypes";
 
 export default function LoginPage() {
 
     const router = useRouter()
 
-    const [username, setUsername] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const login = (event: React.FormEvent) => {
+    const logins = async (event: React.FormEvent) => {
         event.preventDefault()
-
+        try {
+            const { data: { code, message: msg, data }, status } = await login({ email, password })
+            if (status === 200 && code === 0) {
+                message(msg, MessageTypeEnum.success)
+            }else{
+                throw Error(msg)
+            }
+        } catch (error: any) {
+            message(error.message, MessageTypeEnum.error)
+        }
     }
 
     const register = () => {
-        router.push("/register", {
-            
-        })
+        router.push("/register", {})
     }
 
     const iconStyle = "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
@@ -32,17 +42,17 @@ export default function LoginPage() {
         <div className="w-full h-full flex items-center justify-center">
             <div className="flex flex-col justify-center items-center pt-6 pr-3 pb-6 pl-3 w-1/3 h-3/5 bg-white rounded-lg">
                 <div className="text-lg font-bold mb-20">Welcome Back</div>
-                <form onSubmit={login} className="w-full flex flex-col items-center mb-4">
+                <form onSubmit={logins} className="w-full flex flex-col items-center mb-4">
                     <div className="mb-4 relative w-4/5">
                         <FaUser className={iconStyle} />
                         <input
                             className={inputStyle}
                             type="text"
-                            id="username"
-                            name="username"
-                            value={username}
-                            onChange={event => setUsername(event.target.value)}
-                            placeholder="Enter your username"
+                            id="email"
+                            name="email"
+                            value={email}
+                            onChange={event => setEmail(event.target.value)}
+                            placeholder="Enter your email"
                             required
                         />
                     </div>
@@ -55,7 +65,7 @@ export default function LoginPage() {
                             name="password"
                             value={password}
                             onChange={event => setPassword(event.target.value)}
-                            placeholder="Enter your username"
+                            placeholder="Enter your email"
                             required
                         />
                     </div>
@@ -68,7 +78,7 @@ export default function LoginPage() {
                         </button>
                         <button
                             type="button"
-                            onClick={() => { setUsername(""); setPassword("") }}
+                            onClick={() => { setEmail(""); setPassword("") }}
                             className="w-2/5 pt-2 pb-2 border border-gray-300 rounded-md hover:border-gray-400"
                         >
                             Reset

@@ -5,3 +5,8 @@ export interface RegisterRequestType {
     password: string
     re_password: string
 }
+
+export interface LoginRequestType {
+    email: string
+    password: string
+}

@@ -1,8 +1,8 @@
-import { LayoutProps } from "../../.next/types/app/layout"
+import { LayoutType } from "../../interfaces/commonTypes";
 
 import styles from "./register.module.css"
 
-export default function RegisterLayout(props: LayoutProps) {
+export default function RegisterLayout(props:LayoutType) {
     const { children } = props
 
     return (

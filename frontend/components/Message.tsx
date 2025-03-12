@@ -1,14 +1,14 @@
 "use client"
 
 import React from "react"
-import { MessageType, MessageTypeEnum } from "../interfaces/MessageTypes"
+import { MessageType, MessageTypeEnum } from "../interfaces/messageTypes"
 import { createRoot } from "react-dom/client"
 
 const colorMap = {
-    [MessageTypeEnum.success]: "bg-green-100",
-    [MessageTypeEnum.info]: "bg-gray-100",
-    [MessageTypeEnum.warning]: "bg-yellow-100",
-    [MessageTypeEnum.error]: "bg-red-600"
+    [MessageTypeEnum.success]: "bg-green-600",
+    [MessageTypeEnum.info]: "bg-gray-600",
+    [MessageTypeEnum.warning]: "bg-orange-600",
+    [MessageTypeEnum.error]: "bg-red-500"
 }
 
 const Message = (props: MessageType) => {
@@ -25,15 +25,16 @@ const Message = (props: MessageType) => {
         return () => clearTimeout(timer)
     }, [duration, onClose])
 
-
-
     return (
         <>
             {
                 !visible ? null :
-                    <div className={`${colorMap[type]} p-2 border min-w-[120px] min-h-[40px] text-black w-10 h-8 grid place-items-center`}>
-                        <span>{content}</span>
-                        <span>×</span>
+                    <div className={
+                        `${colorMap[type]} flex justify-center p-2 border rounded-md min-h-[40px] text-white 
+                        transform transition-all duration-1000 ease-in-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}`
+                    }>
+                        <div className="w-auto">{content}</div>
+                        <div className="cursor-pointer ml-3" onClick={()=>setVisible(false)}>×</div>
                     </div>
             }
         </>
@@ -41,7 +42,6 @@ const Message = (props: MessageType) => {
 }
 
 const message = (content: string, type: MessageTypeEnum, duration?: number, onClose?: () => void) => {
-    console.log("调用了 = ")
 
     const container = document.createElement('div')
 
@@ -52,7 +52,6 @@ const message = (content: string, type: MessageTypeEnum, duration?: number, onCl
         transform: "translateX(-50%)", // 将容器向左移动其自身宽度的一半，实现居中
         width: 'auto',              // 宽度自适应
         zIndex: '9999',
-        pointerEvents: 'none'       // 不影响页面交互
     })
 
     document.body.appendChild(container)

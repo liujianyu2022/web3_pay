@@ -25,3 +25,9 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer base {
+  html {
+    font-size: 10px;    /* 1rem = 10px */
+  }
+}

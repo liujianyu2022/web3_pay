@@ -8,6 +8,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+      },
+      width: {
+        "1/6": "16%"
+      },
+      lineHeight: {
+
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

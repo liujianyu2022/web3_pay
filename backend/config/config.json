@@ -2,12 +2,12 @@
     "database": {
         "user": "root",
         "password": "liujianyu",
-        "host": "192.168.137.4",
+        "host": "192.168.7.237",
         "port": 3306,
         "database_name": "web3_pay"
     },
     "redis": {
-        "addr": "192.168.137.4:6379",
+        "addr": "192.168.7.237:6379",
         "password": "liujianyu",
         "db": 0
     },

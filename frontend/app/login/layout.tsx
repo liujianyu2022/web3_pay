@@ -1,4 +1,4 @@
-import { LayoutType } from "../../interfaces/layoutTypes";
+import { LayoutType } from "../../interfaces/commonTypes";
 
 import styles from "./login.module.css"
 
