@@ -45,6 +45,11 @@ var routerSet = wire.NewSet(
 	router.SetupRouter,
 )
 
+var websocketSet = wire.NewSet(
+	handlers.NewWebsocketHandler,
+)
+
+
 var SuperSet = wire.NewSet(
 	configSet,
 	toolsSet,
@@ -53,6 +58,8 @@ var SuperSet = wire.NewSet(
 	handlerSet,
 	serviceSet,
 	repositorySet,
+
+	websocketSet,
 )
 
 func InitailizeApp() *gin.Engine {

@@ -6,10 +6,13 @@ import { FaUser, FaLock } from 'react-icons/fa';
 import { login } from "../../api/user";
 import message from "../../components/Message";
 import { MessageTypeEnum } from "../../interfaces/messageTypes";
+import { useDispatch } from "react-redux";
+import { UserAction } from "../../interfaces/reducerTypes";
 
 export default function LoginPage() {
 
     const router = useRouter()
+    const dispatch = useDispatch()
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -20,6 +23,16 @@ export default function LoginPage() {
             const { data: { code, message: msg, data }, status } = await login({ email, password })
             if (status === 200 && code === 0) {
                 message(msg, MessageTypeEnum.success)
+
+                router.push("/dashboard")
+
+                dispatch({
+                    type: UserAction.ACCESS_TOKEN_CHANGE,
+                    payload: {
+                        accessToken: data
+                    }
+                })
+
             }else{
                 throw Error(msg)
             }

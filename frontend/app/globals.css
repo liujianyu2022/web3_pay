@@ -28,6 +28,8 @@ body {
 
 @layer base {
   html {
-    font-size: 10px;    /* 1rem = 10px */
+    /* tailwindcss 中已经有了指定，1rem = 16px，如果将其设置为 1rem = 10px，会导致其他指令效果变化较大，因此不建议修改这个 1rem 的值 */
+    /* 1rem = 10px */
+    /* font-size: 10px;  */
   }
 }

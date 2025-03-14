@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
+import { Provider } from "react-redux";
+import { persistor, store } from "../store/store";
+import { PersistGate } from "redux-persist/integration/react";
+import ProviderWrapper from "./providerWrapper";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -19,11 +24,11 @@ export const metadata: Metadata = {
 };
 
 // 根布局（所有页面共享)
-export default function RootLayout({ children }: Readonly<{children: React.ReactNode}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="w-full h-full">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full`}>
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full  text-20`}>
+        <ProviderWrapper>{children}</ProviderWrapper>
       </body>
     </html>
   );

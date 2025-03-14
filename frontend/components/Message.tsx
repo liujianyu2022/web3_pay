@@ -12,7 +12,7 @@ const colorMap = {
 }
 
 const Message = (props: MessageType) => {
-    const { content, type, duration = 50, onClose } = props
+    const { content, type, duration = 5, onClose } = props
 
     const [visible, setVisible] = React.useState<boolean>(true)
 

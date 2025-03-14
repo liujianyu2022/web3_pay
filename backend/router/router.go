@@ -7,6 +7,7 @@ import (
 
 func SetupRouter(
 	userHandler *handlers.UserHandler,
+	websocketHandler *handlers.WebsocketHandler,
 ) *gin.Engine {
 	ginServer := gin.Default()
 
@@ -14,6 +15,11 @@ func SetupRouter(
 	{
 		api.POST("/register", userHandler.Register)
 		api.POST("/login", userHandler.Login)
+	}
+
+	websocket := ginServer.Group("/websocket")
+	{
+		websocket.GET("/", websocketHandler.RunWebsocket)
 	}
 
 	return ginServer

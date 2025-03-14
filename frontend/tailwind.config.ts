@@ -9,12 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       fontSize: {
+        "15px": "15px",
       },
       width: {
         "1/6": "16%"
       },
       lineHeight: {
-
+        "12": "3rem"
       },
       colors: {
         background: "var(--background)",
